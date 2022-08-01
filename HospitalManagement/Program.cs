@@ -1,15 +1,33 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using HospitalManagement.Data;
+﻿using HospitalManagement.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using MediatR;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+
+var connectionString = builder.Configuration.GetConnectionString("HospitalsInventory");
+builder.Services.AddDbContext<HospitalsDb>(options =>
+    options.UseSqlite(connectionString)
+    .EnableSensitiveDataLogging()
+);
+builder.Services.AddScoped<IHospitalManagementDb, HospitalsDb>();
+
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 var app = builder.Build();
+
+
+await using var scope = app.Services.CreateAsyncScope();
+using var db = scope.ServiceProvider.GetService<HospitalsDb>();
+await db.Database.MigrateAsync();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

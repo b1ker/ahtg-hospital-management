@@ -6,4 +6,47 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Microsoft.EntityFrameworkCore" />
+    <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
+    <None Remove="MediatR" />
+    <None Remove="MediatR.Extensions.Microsoft.DependencyInjection" />
+    <None Remove="Domain\DTO\" />
+    <None Remove="Microsoft.EntityFrameworkCore.Design" />
+    <None Remove="Business\" />
+    <None Remove="Business\Queries\" />
+    <None Remove="Business\Handlers\" />
+    <None Remove="Business\Handlers\Queries\" />
+    <None Remove="Migrations\" />
+    <None Remove="Mappings\" />
+    <None Remove="AutoMapper" />
+    <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+    <None Remove="Domain\Models\" />
+    <None Remove="Business\Commands\" />
+    <None Remove="Business\Handlers\Commands\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.7" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Domain\DTO\" />
+    <Folder Include="Business\" />
+    <Folder Include="Business\Queries\" />
+    <Folder Include="Business\Handlers\" />
+    <Folder Include="Business\Handlers\Queries\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="Mappings\" />
+    <Folder Include="Domain\Models\" />
+    <Folder Include="Business\Commands\" />
+    <Folder Include="Business\Handlers\Commands\" />
+  </ItemGroup>
 </Project>

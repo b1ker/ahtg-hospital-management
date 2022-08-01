@@ -1,11 +1,19 @@
-﻿namespace HospitalManagement.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HospitalManagement.Domain.Dto
 {
-    public class Hospital
+    public class HospitalData
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public Guid AddressId { get; set; }
-        public Address Address { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        public string? Name { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        public string? Description { get; set; }
+
+        public AddressData? Address { get; set; }
     }
 }
