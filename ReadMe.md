@@ -8,5 +8,5 @@ Unfrotunatelly i cannot spend more time on this project. Here are some todos tha
 - Add other entities and relations
 - Authentication
 
-Thanks to:
+Thanks to: <br/>
 Hospital Icon by Rank Sol
