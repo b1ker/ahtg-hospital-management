@@ -1,13 +1,10 @@
-﻿@page "/hospitals"
+﻿@page "/hospital/{id}"
 
-<PageTitle>Hospitals</PageTitle>
+<PageTitle>Hospital details</PageTitle>
 <div class="container">
     <div class="row justify-content-md-left">
         <div class="col col-md-auto mt-auto mb-auto">
-            <h1>Hospitals</h1>
-        </div>
-        <div class="col col-md-auto mt-auto mb-auto">
-            <button class="btn btn-primary" @onclick="StartAdding">Add <i class="bi bi-plus-circle"></i></button>
+            <h1>Hospital details</h1>
         </div>
     </div>
 </div>
@@ -132,7 +129,7 @@ else
                     <td>@hospital.Name</td>
                     <td>@hospital.Description</td>
                     <td>@hospital.Address.ToString()</td>
-                    <td><i class="bi bi-plus-circle"></i></td>
+                    <td><span class="oi oi-pencil"></span></td>
                 </tr>
                 }
         </tbody>

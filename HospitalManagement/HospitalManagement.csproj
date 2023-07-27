@@ -40,9 +40,7 @@
   <ItemGroup>
     <Folder Include="Domain\DTO\" />
     <Folder Include="Business\" />
-    <Folder Include="Business\Queries\" />
     <Folder Include="Business\Handlers\" />
-    <Folder Include="Business\Handlers\Queries\" />
     <Folder Include="Migrations\" />
     <Folder Include="Mappings\" />
     <Folder Include="Domain\Models\" />
