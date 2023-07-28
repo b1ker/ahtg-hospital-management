@@ -128,12 +128,12 @@ else
         <tbody>
             @foreach (var hospital in hospitalsList)
                 {
-                <tr>
-                    <td>@hospital.Name</td>
-                    <td>@hospital.Description</td>
-                    <td>@hospital.Address.ToString()</td>
-                    <td><i class="bi bi-plus-circle"></i></td>
-                </tr>
+                    <tr>
+                        <td><a class="link-unstyled" href="/hospital/@hospital.Id">@hospital.Name</a></td>
+                        <td><a class="link-unstyled" href="/hospital/@hospital.Id">@hospital.Description</a></td>
+                        <td>@hospital.Address.ToString()</td>
+                        <td><a href="/hospital/@hospital.Id"><i class="bi bi-info-circle"></i></a></td>
+                    </tr>
                 }
         </tbody>
     </table>

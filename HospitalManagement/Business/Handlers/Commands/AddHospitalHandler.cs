@@ -26,12 +26,12 @@ namespace HospitalManagement.Business.Handlers.Commands
             {
                 var record = _mapper.Map<HospitalData, Hospital>(request.HospitalData);
                 await _db.Hospitals.AddAsync(record);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync(cancellationToken);
 
                 return true;
             } catch (Exception ex)
             {
-                _logger.LogError("There was a problem while adding hoospital. Data: {Request}, Exception: {Exception}", request, ex);
+                _logger.LogError("There was a problem while adding hospital. Data: {Request}, Exception: {Exception}", request, ex);
                 return false;
             }
         }
