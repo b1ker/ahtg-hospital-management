@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using MediatR;
 using System.Reflection;
+using FluentValidation;
+using HospitalManagement.Business.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +18,9 @@ builder.Services.AddDbContext<HospitalsDb>(options =>
 );
 builder.Services.AddScoped<IHospitalManagementDb, HospitalsDb>();
 
+builder.Services.AddValidatorsFromAssemblyContaining<AddHospitalCommandValidator>();
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Logging.ClearProviders();
@@ -26,7 +30,7 @@ var app = builder.Build();
 
 
 await using var scope = app.Services.CreateAsyncScope();
-using var db = scope.ServiceProvider.GetService<HospitalsDb>();
+await using var db = scope.ServiceProvider.GetService<HospitalsDb>();
 await db.Database.MigrateAsync();
 
 // Configure the HTTP request pipeline.

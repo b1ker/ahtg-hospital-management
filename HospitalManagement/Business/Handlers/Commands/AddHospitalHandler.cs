@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using HospitalManagement.Business.Commands;
+using HospitalManagement.Business.Validators;
 using HospitalManagement.Domain.Dto;
 using HospitalManagement.Domain.Entities;
 using HospitalManagement.Infrastructure;
@@ -12,16 +14,20 @@ namespace HospitalManagement.Business.Handlers.Commands
         private readonly HospitalsDb _db;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
+        private readonly IValidator<AddHospital> _validator;
 
-        public AddHospitalHandler(HospitalsDb db, IMapper mapper, ILogger<AddHospitalHandler> logger)
+        public AddHospitalHandler(HospitalsDb db, IMapper mapper, ILogger<AddHospitalHandler> logger, IValidator<AddHospital> validator)
         {
             _db = db;
             _mapper = mapper;
             _logger = logger;
+            _validator = validator;
         }
 
         public async Task<bool> Handle(AddHospital request, CancellationToken cancellationToken)
         {
+            _validator.ValidateAndThrow(request);
+            
             try
             {
                 var record = _mapper.Map<HospitalData, Hospital>(request.HospitalData);

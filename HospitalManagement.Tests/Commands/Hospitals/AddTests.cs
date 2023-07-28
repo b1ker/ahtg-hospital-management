@@ -1,6 +1,8 @@
 using AutoMapper;
+using FluentValidation;
 using HospitalManagement.Business.Commands;
 using HospitalManagement.Business.Handlers.Commands;
+using HospitalManagement.Business.Validators;
 using HospitalManagement.Domain.Dto;
 using HospitalManagement.Infrastructure;
 using Microsoft.Data.Sqlite;
@@ -34,7 +36,7 @@ public class Tests
     }
 
     [Test]
-    public async Task Invoking_AddHospitalHandler_CreatesHospital()
+    public async Task AddingHospitalData_WithCompleteData_CreatesHospital()
     {
         // Arrange
         var hospitalData = new HospitalData
@@ -53,7 +55,7 @@ public class Tests
             HospitalData = hospitalData
         };
         var logger = new Mock<ILogger<AddHospitalHandler>>().Object;
-        var handler = new AddHospitalHandler(_hospitalsDb, _mapper, logger);
+        var handler = new AddHospitalHandler(_hospitalsDb, _mapper, logger, new AddHospitalCommandValidator());
 
         // Act
         await handler.Handle(addHospitalRequest, new CancellationToken());
@@ -63,6 +65,31 @@ public class Tests
         Assert.AreEqual(hospitalData.Name, _hospitalsDb.Hospitals.First().Name);
         Assert.AreEqual(hospitalData.Description, _hospitalsDb.Hospitals.First().Description);
         Assert.AreEqual(hospitalData.Address.AddressLine1, _hospitalsDb.Hospitals.First().Address.AddressLine1);
-        
+    }
+    
+    [Test]
+    public async Task AddingHospitalData_WithIncompleteData_ThrowsValidationException()
+    {
+        // Arrange
+        var hospitalData = new HospitalData
+        {
+            Name = "Hospital name",
+            Description = "Description",
+            Address = new AddressData
+            {
+                AddressLine1 = "Line1",
+                ZipCode = "123123",
+                State = null,
+            }
+        };
+        var addHospitalRequest = new AddHospital
+        {
+            HospitalData = hospitalData
+        };
+        var logger = new Mock<ILogger<AddHospitalHandler>>().Object;
+        var handler = new AddHospitalHandler(_hospitalsDb, _mapper, logger, new AddHospitalCommandValidator());
+
+        // Assert
+        Assert.ThrowsAsync<ValidationException>(() => handler.Handle(addHospitalRequest, new CancellationToken()));
     }
 }
